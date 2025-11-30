@@ -1,0 +1,46 @@
+Cabang,Kode_Barang,Nama_Barang,Kategori_Barang,Harga_Jual,Harga_Beli,Satuan,Penjualan,Nilai_Penjualan,Profit
+Jakarta,BP001,Beras,Bahan Pokok,15000,12500,kg,14,210000,35000
+Jakarta,BP002,Tepung Terigu,Bahan Pokok,11000,9000,kg,36,396000,72000
+Jakarta,BP003,Minyak Goreng,Bahan Pokok,19500,18000,liter,25,487500,37500
+Jakarta,BP004,Kentang,Bahan Pokok,21000,17000,kg,33,693000,132000
+Jakarta,BP005,Jagung,Bahan Pokok,5500,3500,kg,18,99000,36000
+Jakarta,BD001,Garam,Bumbu Dapur,10000,8000,kg,38,380000,76000
+Jakarta,BD002,Gula,Bumbu Dapur,17500,16000,kg,14,245000,21000
+Jakarta,BD003,Merica,Bumbu Dapur,1600,1400,sachet,35,56000,7000
+Jakarta,BD004,Bawang Putih,Bumbu Dapur,42000,40000,kg,41,1722000,82000
+Jakarta,BD005,Bawang Merah,Bumbu Dapur,50000,47000,kg,15,750000,45000
+Jakarta,MK001,Le Minerale,Minuman Kemasan,3000,2500,botol,11,33000,5500
+Jakarta,MK002,Teh Pucuk,Minuman Kemasan,4000,3500,botol,49,196000,24500
+Jakarta,MK003,Kopi Kapal Api,Minuman Kemasan,5800,5000,botol,13,75400,10400
+Jakarta,MK004,Ultra Milk Coklat,Minuman Kemasan,6500,6000,pack,34,221000,17000
+Jakarta,MK005,You C-1000,Minuman Kemasan,9000,8000,botol,13,117000,13000
+Bandung,BP001,Beras,Bahan Pokok,15000,12500,kg,30,450000,75000
+Bandung,BP002,Tepung Terigu,Bahan Pokok,11000,9000,kg,13,143000,26000
+Bandung,BP003,Minyak Goreng,Bahan Pokok,19500,18000,liter,11,214500,16500
+Bandung,BP004,Kentang,Bahan Pokok,21000,17000,kg,32,672000,128000
+Bandung,BP005,Jagung,Bahan Pokok,5500,3500,kg,41,225500,82000
+Bandung,BD001,Garam,Bumbu Dapur,10000,8000,kg,19,190000,38000
+Bandung,BD002,Gula,Bumbu Dapur,17500,16000,kg,26,455000,39000
+Bandung,BD003,Merica,Bumbu Dapur,1600,1400,sachet,31,49600,6200
+Bandung,BD004,Bawang Putih,Bumbu Dapur,42000,40000,kg,46,1932000,92000
+Bandung,BD005,Bawang Merah,Bumbu Dapur,50000,47000,kg,19,950000,57000
+Bandung,MK001,Le Minerale,Minuman Kemasan,3000,2500,botol,42,126000,21000
+Bandung,MK002,Teh Pucuk,Minuman Kemasan,4000,3500,botol,20,80000,10000
+Bandung,MK003,Kopi Kapal Api,Minuman Kemasan,5800,5000,botol,11,63800,8800
+Bandung,MK004,Ultra Milk Coklat,Minuman Kemasan,6500,6000,pack,32,208000,16000
+Bandung,MK005,You C-1000,Minuman Kemasan,9000,8000,botol,37,333000,37000
+Surabaya,BP001,Beras,Bahan Pokok,15000,12500,kg,28,420000,70000
+Surabaya,BP002,Tepung Terigu,Bahan Pokok,11000,9000,kg,38,418000,76000
+Surabaya,BP003,Minyak Goreng,Bahan Pokok,19500,18000,liter,46,897000,69000
+Surabaya,BP004,Kentang,Bahan Pokok,21000,17000,kg,44,924000,176000
+Surabaya,BP005,Jagung,Bahan Pokok,5500,3500,kg,40,220000,80000
+Surabaya,BD001,Garam,Bumbu Dapur,10000,8000,kg,47,470000,94000
+Surabaya,BD002,Gula,Bumbu Dapur,17500,16000,kg,48,840000,72000
+Surabaya,BD003,Merica,Bumbu Dapur,1600,1400,sachet,12,19200,2400
+Surabaya,BD004,Bawang Putih,Bumbu Dapur,42000,40000,kg,15,630000,30000
+Surabaya,BD005,Bawang Merah,Bumbu Dapur,50000,47000,kg,19,950000,57000
+Surabaya,MK001,Le Minerale,Minuman Kemasan,3000,2500,botol,32,96000,16000
+Surabaya,MK002,Teh Pucuk,Minuman Kemasan,4000,3500,botol,21,84000,10500
+Surabaya,MK003,Kopi Kapal Api,Minuman Kemasan,5800,5000,botol,12,69600,9600
+Surabaya,MK004,Ultra Milk Coklat,Minuman Kemasan,6500,6000,pack,36,234000,18000
+Surabaya,MK005,You C-1000,Minuman Kemasan,9000,8000,botol,30,270000,30000

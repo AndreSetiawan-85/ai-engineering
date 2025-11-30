@@ -1,7 +1,7 @@
 # Import library
 import pandas as pd
 import numpy as np
-import mysql.connector
+import matplotlib.pyplot as plt
 
 # Membuat dictionary barang lengkap dengan nama, harga jual, harga beli, dan satuan
 barang = {
@@ -34,7 +34,7 @@ def kategori_barang(kode):
     elif kode.startswith("MK"):
         return "Minuman Kemasan"
     else:
-        return "Lainnya"
+        return None
 
 # Membuat data list dari dictionary barang dan cabang dengan menggunakan looping
 data = []
@@ -57,34 +57,155 @@ df = pd.DataFrame(data, columns=["Cabang", "Kode_Barang", "Nama_Barang", "Katego
 np.random.seed(25)
 df["Penjualan"] = np.random.randint(10, 50, size=len(df))
 
-print(df)
+#Menambahkan kolom Nilai Penjualan dan Profit
+df["Nilai_Penjualan"] = df["Penjualan"] * df["Harga_Jual"]
+df["Profit"] = (df["Harga_Jual"] - df["Harga_Beli"]) * df["Penjualan"]
 
-# Koneksi ke MySQL
-mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='Purwadhika.2025',
-    database='toko'
-)
-cursor = mydb.cursor()
-if mydb.is_connected():
-    print("Koneksi ke database SQL berhasil!")
+# Membuat fungsi untuk menampilkan tabel laporan penjualan barang toko
+def tampilkan_tabel():
+    print("\n=== TABEL LAPORAN PENJUALAN BARANG TOKO ===")
+    print(df)
 
-# Query INSERT
-sql = """
-INSERT INTO laporan_penjualan_barang_toko
-(Cabang, Kode_Barang, Nama_Barang, Kategori_Barang, Harga_Jual, Harga_Beli, Satuan, Penjualan)
-VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-"""
+# Membuat fungsi untuk menambahkan data baru pada tabel laporan penjualan toko
+def tambah_data():
+    cabang = input("Masukkan nama cabang: ")
+    kode = input("Masukkan kode barang: ")
+    if kode not in barang:
+        print("Kode barang tidak ditemukan!")
+        return
+    jumlah = int(input("Masukkan jumlah terjual: "))
+    df.loc[len(df)] = [
+        cabang,
+        kode,
+        barang[kode]["Nama"],
+        kategori_barang(kode),
+        barang[kode]["Harga_Jual"],
+        barang[kode]["Harga_Beli"],
+        barang[kode]["Satuan"],
+        jumlah,
+        jumlah * barang[kode]["Harga_Jual"],
+        (barang[kode]["Harga_Jual"] - barang[kode]["Harga_Beli"]) * jumlah
+    ]
+    print("Data berhasil ditambahkan!")
 
-# Ubah DataFrame menjadi list of tuples
-data_to_insert = [tuple(x) for x in df.to_numpy()]
+# Membuat fungsi untuk menghapus data pada tabel laporan penjualan toko 
+def hapus_data():
+    kode = input("Masukkan kode barang yang ingin dihapus: ")
+    cabang = input("Masukkan nama cabang: ")
+    idx = df[(df["Kode_Barang"] == kode) & (df["Cabang"] == cabang)].index
+    if len(idx) > 0:
+        df.drop(idx, inplace=True)
+        print("Data berhasil dihapus!")
+    else:
+        print("Data tidak ditemukan!")
 
-# Eksekusi query
-cursor.executemany(sql, data_to_insert)
-mydb.commit()
+# Membuat fungsi untuk menampilkan tabel laporan penjualan toko berdasarkan cabang
+def laporan_per_cabang():
+    cabang = input("Masukkan nama cabang: ")
+    data_cabang = df[df["Cabang"] == cabang]
+    if data_cabang.empty:
+        print("Tidak ada data untuk cabang ini.")
+    else:
+        print(data_cabang)
 
-print(cursor.rowcount, "data berhasil ditambahkan ke tabel laporan_penjualan_barang_toko")
+# Membuat fungsi untuk menampilkan tabel laporan penjualan toko berdasarkan kode barang
+def laporan_per_kode():
+    kode = input("Masukkan kode barang: ")
+    data_kode = df[df["Kode_Barang"] == kode]
+    if data_kode.empty:
+        print("Tidak ada data untuk kode ini.")
+    else:
+        print(data_kode)
 
-cursor.close()
-mydb.close()
+# Membuat fungsi untuk menampilkan profit penjualan berdasarkan cabang
+def profit_per_cabang():
+    print("\n=== PROFIT PER CABANG ===")
+    print(df.groupby("Cabang")["Profit"].sum())
+
+# Membuat fungsi untuk menampilkan profit penjualan berdasarkan kode barang
+def profit_per_kode():
+    print("\n=== PROFIT PER KODE BARANG ===")
+    print(df.groupby("Kode_Barang")["Profit"].sum())
+
+# Membuat fungsi untuk menampilkan rata-rata penjualan berdasarkan cabang
+def mean_per_cabang():
+    print("\n=== RATA-RATA PENJUALAN PER CABANG ===")
+    print(df.groupby("Cabang")["Penjualan"].mean().round(2))
+
+# Membuat fungsi untuk menampilkan rata-rata penjualan berdasarkan kode barang
+def mean_per_kode():
+    print("\n=== RATA-RATA PENJUALAN PER KODE BARANG ===")
+    print(df.groupby("Kode_Barang")["Penjualan"].mean().round(2))
+
+# Membuat grafik total penjualan per cabang
+def grafik_total_penjualan_per_cabang():
+    plt.figure(figsize=(10,5))
+    total = df.groupby("Cabang")["Penjualan"].sum()
+    plt.bar(total.index, total.values, color=["blue", "green", "red"])
+    plt.xlabel("Cabang")
+    plt.ylabel("Jumlah Penjualan")
+    plt.title("Grafik Total Penjualan Per Cabang")
+    plt.show(block=False)
+    input("\n Tekan ENTER untuk kembali ke menu")
+    plt.close()
+
+# Membuat grafik persentase penjualan berdasarkan kategori barang
+def grafik_persentase_penjualan_kategori_barang():
+    plt.figure(figsize=(10,5))
+    penjualan_kategori_barang = df.groupby("Kategori_Barang")["Penjualan"].sum()
+    persentase = penjualan_kategori_barang / penjualan_kategori_barang.sum() * 100
+    plt.pie(persentase, labels=persentase.index, autopct = "%1.2f%%", colors=["blue", "green", "red"])
+    plt.title("Grafik Persentase Penjualan Berdasarkan Kategori Barang")
+    plt.show(block=False)
+    input("\n Tekan ENTER untuk kembali ke menu")
+    plt.close()
+    
+while True:
+    print("""
+========= LAPORAN PENJUALAN BARANG TOKO =========
+Silakan pilih menu:
+1. Menampilkan tabel laporan penjualan barang toko
+2. Menambahkan data penjualan barang
+3. Menghapus data penjualan barang
+4. Menampilkan laporan penjualan berdasarkan cabang
+5. Menampilkan laporan penjualan berdasarkan kode barang
+6. Menghitung profit penjualan berdasarkan cabang
+7. Menghitung profit penjualan berdasarkan kode barang
+8. Menampilkan nilai mean penjualan berdasarkan cabang
+9. Menampilkan nilai mean penjualan berdasarkan kode barang
+10. Menampilkan grafik total penjualan per cabang
+11. Menampilkan grafik persentase penjualan berdasarkan kategori barang
+12. Keluar dari program
+""")
+
+    pilihan = input("Masukkan pilihan (1-12): ")
+    if pilihan == "1":
+        tampilkan_tabel()
+    elif pilihan == "2":
+        tambah_data()
+    elif pilihan == "3":
+        hapus_data()
+    elif pilihan == "4":
+        laporan_per_cabang()
+    elif pilihan == "5":
+        laporan_per_kode()
+    elif pilihan == "6":
+        profit_per_cabang()
+    elif pilihan == "7":
+        profit_per_kode()
+    elif pilihan == "8":
+        mean_per_cabang()
+    elif pilihan == "9":
+        mean_per_kode()
+    elif pilihan == "10":
+        grafik_total_penjualan_per_cabang()
+    elif pilihan == "11":
+        grafik_persentase_penjualan_kategori_barang()
+    elif pilihan == "12":
+        df.to_csv("data_penjualan.csv", index=False)
+        print("Terima kasih! Program selesai.")
+        break
+    else:
+        print("Pilihan tidak valid, silakan coba lagi.")
+
+
